@@ -10,7 +10,7 @@ typedef struct _hash_table_t {
 hash_table_t create_table();
 
 int uniq_hash (char *str);
-int hash_func(char *str, int table_size)
+int hash_func(char *str)
 {
 	int sum;
 
@@ -19,28 +19,40 @@ int hash_func(char *str, int table_size)
 	for( ; *str; str++) {
 		sum = sum + *str;
 	}
-	return (sum % table_size);
+	return (sum % TABLE_SIZE);
 }
 
 int uniq_hash (char *str)
 {
-	unsigned long hash = 5381;
+	unsigned long hash = 123456;
 
 	int sum;
 
 	//while(sum = *str++)
 	for(sum = *str; *str != '\0'; *str++)
-		hash = sum + (hash << 5) - hash;
+		hash = sum + (hash << 6) - hash;
 
-	return hash % 12;
+	return hash % TABLE_SIZE;
 }
 int main()
 {
-	int key = hash_func("dog", 12);
-	printf("The key for string \"parinay\" is %d\n", key);
-	key = uniq_hash("god");
+	int key = hash_func("dog");
+	printf("Using hash_func()\n");
+	printf("The key for string is %d\n", key);
+	//key = uniq_hash("god");
+	key = hash_func("god");
 	printf("The key for string is %d\n",key);
+	key = hash_func("hog");
+	printf("The key for string is %d\n",key);
+	key = hash_func("kog");
+	printf("The key for string is %d\n",key);
+	key = hash_func("gog");
+	printf("The key for string is %d\n",key);
+
+	printf("Using unique_has()\n");
 	key = uniq_hash("dog");
+	printf("The key for string is %d\n",key);
+	key = uniq_hash("god");
 	printf("The key for string is %d\n",key);
 	key = uniq_hash("hog");
 	printf("The key for string is %d\n",key);
